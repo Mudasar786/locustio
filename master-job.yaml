@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: locust-master
-        image: mudasar786/locustio:9.3
+        image: mudasar786/locustio:9
         imagePullPolicy: IfNotPresent
         volumeMounts:
           - mountPath: /scripts
