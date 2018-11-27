@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  name: locust-master
+spec:
+  parallelism: 1
+  completions: 1
+  template:
+    metadata:
+      labels:
+        role: locust-master
+    spec:
+      containers:
+      - name: locust-master
+        image: mudasar786/locustio:9.3
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - mountPath: /scripts
+            name: test-scripts
+        envFrom:
+          - configMapRef:
+              name: locust-configmap
+        command: ["locust"]
+        args: ["--master", "--no-web", "--only-summary", '--locustfile=$(locustfile)', '-H $(target_host)', '--expect-slaves=$(no_of_slaves)', '-c $(no_of_clients)', '-r $(hatch_rate)', '--run-time=$(run_time)']
+        ports:
+        - containerPort: '5557'
+          name: locust-p1
+          protocol: TCP
+        - containerPort: '5558'
+          name: locust-p2
+          protocol: TCP
+        livenessProbe:
+          tcpSocket:
+            port: 5557
+          initialDelaySeconds: '3'
+          periodSeconds: '30'
+        readinessProbe:
+          tcpSocket:
+            port: 5557
+          initialDelaySeconds: '3'
+          periodSeconds: '30'
+      restartPolicy: OnFailure
+      terminationGracePeriodSeconds: '10'
+      volumes:
+      - name: test-scripts
+        configMap:
+          name: tests-configmap

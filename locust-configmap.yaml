@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: locust-configmap
+data:
+  #Target Host URL
+  target_host: "http://ruby-ex-mudasar.cnap-demo.frn00006.cna.ukcloud.com"
+  #Number of Load Generating Slaves to wait for before starting a test
+  no_of_slaves: "2"
+  #No of Clients to Similate
+  no_of_clients: "2000"
+  #Hatch Rate per second
+  hatch_rate: "200"
+  #Test duration
+  run_time: "100s"
+  #Locust file location
+  locustfile: "/scripts/locustfile"

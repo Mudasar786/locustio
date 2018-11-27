@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tests-configmap
+data:
+  locustfile.py: |
+    from locust import HttpLocust, TaskSet, task, stats
+
+    stats.CSV_STATS_INTERVAL_SEC = 10
+
+    class UserTasks(TaskSet):
+
+        @task
+        def index(self):
+            self.client.get("/")
+
+        @task
+        def stats(self):
+            self.client.get("/stats/requests")
+
+    class WebsiteUser(HttpLocust):
+        task_set = UserTasks
