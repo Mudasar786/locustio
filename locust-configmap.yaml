@@ -4,7 +4,7 @@ metadata:
   name: locust-configmap
 data:
   #Target Host URL
-  target_host: "http://ruby-ex-mudasar.cnap-demo.frn00006.cna.ukcloud.com"
+  target_host: "http://www.example.com"
   #Number of Load Generating Slaves to wait for before starting a test
   no_of_slaves: "2"
   #No of Clients to Similate
