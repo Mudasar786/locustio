@@ -10,5 +10,7 @@ spec:
     name: locust-p1
   - port: 5558
     name: locust-p2
+  - port: 8089
+    name: locust-p3    
   selector:
     role: locust-master
