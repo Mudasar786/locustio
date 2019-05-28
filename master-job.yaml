@@ -23,7 +23,7 @@ spec:
           - configMapRef:
               name: locust-configmap
         command: ["locust"]
-        args: ["--master", "--no-web", "--only-summary", '--locustfile=$(locustfile)', '-H $(target_host)', '--expect-slaves=$(no_of_slaves)', '-c $(no_of_clients)', '-r $(hatch_rate)', '--run-time=$(run_time)']
+        args: ["--master", "--only-summary", '--locustfile=$(locustfile)', '-H $(target_host)', '--expect-slaves=$(no_of_slaves)', '-c $(no_of_clients)', '-r $(hatch_rate)', '--run-time=$(run_time)']
         ports:
         - containerPort: '5557'
           name: locust-p1
@@ -31,6 +31,9 @@ spec:
         - containerPort: '5558'
           name: locust-p2
           protocol: TCP
+        - containerPort: '8089'
+          name: locust-p3
+          protocol: TCP    
         livenessProbe:
           tcpSocket:
             port: 5557
