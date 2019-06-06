@@ -1,12 +1,24 @@
 FROM python:3.7-alpine3.9
 
-RUN apk --no-cache add g++ \
-    && pip install --no-cache-dir locustio pyzmq
+ENV PYTHONUNBUFFERED 1
+
+RUN apk update && \
+        apk add --no-cache \
+        gcc \
+        g++ \
+        musl-dev \
+        linux-headers \
+        zeromq-dev \
+        libzmq
+
+RUN pip install -U pip && \
+    pip install --no-cache-dir locustio pyzmq
 
 RUN mkdir /scripts
+
 VOLUME /scripts
 
-EXPOSE 5557 5558 8089
+EXPOSE 8089 5557 5558
 
 RUN addgroup -S locust && adduser -H -D -S locust -G locust
 
